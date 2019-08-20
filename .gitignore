@@ -1,31 +1,46 @@
-# NativeScript
-hooks/
-node_modules/
-platforms/
+node_modules
+platforms
+hooks
+tags
+**/*.js.map
+**/*.metadata.json
 
-# NativeScript Template
-*.js.map
-*.js
-!webpack.config.js
+/nativescript-angular/**/*.d.ts
+/nativescript-angular/**/*.js
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+!/nativescript-angular/global.d.ts
+!/nativescript-angular/postinstall.js
+!/nativescript-angular/hooks/**/*.js
+!/nativescript-angular/gulpfile.js
+!/nativescript-angular/zone-js/dist/*.js
 
-# General
+.tscache
+.nvm
+.vscode
 .DS_Store
-.AppleDouble
-.LSOverride
-.idea
-.cloud
-.project
-tmp/
-typings/
+npm-debug.log
+nativescript-angular*.tgz
+package-lock.json
 
-# Visual Studio Code
+# Apps' JS files
+tests/app/**/*.js
+tests/test-output.txt
+ng-sample/app/**/*.js
+
+# Webpack configuration files
+webpack.config.js
+tsconfig.esm.json
+tsconfig.tns.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+
+# IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
