@@ -1,0 +1,24 @@
+<StackLayout id="login-screen">
+
+    <Label class="title" text="Choose a chatroom to join."></Label>
+
+    <TextField id="room-field"
+        hint="Chatroom name"
+        [(ngmodel)]='chatroomName'>
+    </TextField>
+    <TextField id="user-field"
+        hint="Display name"
+        [(ngmodel)]='displayName'>
+    </TextField>
+
+    <AbsoluteLayout>
+        <Button id="btn-join"
+            (tap)="onJoin()"
+            text="Join">
+        </Button>
+        <Button id="btn-exit"
+            text="Exit">
+        </Button>
+    </AbsoluteLayout>
+
+</StackLayout>

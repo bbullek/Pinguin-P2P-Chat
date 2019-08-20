@@ -1,0 +1,40 @@
+Button {
+    background-color: #D2D4D3;
+    color: #5F6061;
+    border-width: 1;
+    width: 30%;
+    margin-top: 20%;
+    border-radius: 5%;
+}
+
+TextField {
+    width: 74%;
+}
+
+.title {
+    font-size: 20;
+    text-align: center;
+    margin-top: 20%;
+}
+
+/* Root */
+
+#login-screen {
+    background-image: url("res://bg_bw_mesh");
+    background-repeat: repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+/* Buttons */
+
+#btn-join { left: 50; }
+
+#btn-exit { left: 200; }
+
+/* TextFields */
+
+#room-field { margin-top: 10%; }
+
+#user-field { margin-top: 1%; }
