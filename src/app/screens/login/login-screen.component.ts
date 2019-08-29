@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'ns-login-screen',
@@ -8,10 +9,12 @@ import { Component } from "@angular/core";
 })
 
 export class LoginScreenComponent {
+    public constructor(private router: Router) {}
+
     chatroomName = '';
     displayName = '';
 
-    onJoin() {
-
+    public navigateToChatroom() {
+        this.router.navigate(["/chatroom"]);
     }
 }

@@ -13,12 +13,14 @@
 
     <AbsoluteLayout>
         <Button id="btn-join"
-            (tap)="onJoin()"
+            (tap)="navigateToChatroom()"
             text="Join">
         </Button>
         <Button id="btn-exit"
             text="Exit">
         </Button>
     </AbsoluteLayout>
+
+    <router-outlet></router-outlet>
 
 </StackLayout>
