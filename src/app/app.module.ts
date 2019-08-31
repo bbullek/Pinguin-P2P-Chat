@@ -3,6 +3,7 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
 import { AppRoutingModule } from "./app.routing";
 import { AppComponent } from "./app.component";
+import { HideActionBarDirective } from "./screens/util/hideActionBar";
 import { LoginScreenComponent } from "./screens/login/login-screen.component";
 import { ChatroomScreenComponent } from "./screens/chatroom/chatroom-screen.component";
 
@@ -17,7 +18,8 @@ import { ChatroomScreenComponent } from "./screens/chatroom/chatroom-screen.comp
     declarations: [
         AppComponent,
         LoginScreenComponent,
-        ChatroomScreenComponent
+        ChatroomScreenComponent,
+        HideActionBarDirective
     ],
     providers: [],
     schemas: [
