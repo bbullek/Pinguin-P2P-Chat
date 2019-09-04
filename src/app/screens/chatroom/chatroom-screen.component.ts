@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, NgZone } from "@angular/core";
 import { registerElement } from 'nativescript-angular/element-registry';
 
-require("nativescript-websockets");
+const ws = require("nativescript-websockets");
 
 @Component({
     selector: 'ns-chatroom-screen',
@@ -16,7 +16,8 @@ export class ChatroomScreenComponent implements OnInit, OnDestroy {
     public chatBox: string;
 
     public constructor(private zone: NgZone) {
-        this.socket = new WebSocket("", []);
+        this.socket = new ws("ws://192.168.1.8:12345/ws", []);
+        this.socket.open();
         this.messages = [];
         this.chatBox = "";
     }
@@ -29,7 +30,8 @@ export class ChatroomScreenComponent implements OnInit, OnDestroy {
         });
         this.socket.addEventListener('message', event => {
             this.zone.run(() => {
-                this.messages.push(JSON.parse(event.data));
+                this.messages.push({content: this.chatBox});
+                this.chatBox = "";
             });
         });
         this.socket.addEventListener('close', event => {
@@ -47,9 +49,8 @@ export class ChatroomScreenComponent implements OnInit, OnDestroy {
     }
 
     public send() {
-        if(this.chatBox) {
+        if (this.chatBox) {
             this.socket.send(this.chatBox);
-            this.chatBox = "";
         }
     }
 }
