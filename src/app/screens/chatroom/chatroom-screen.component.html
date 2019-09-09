@@ -45,6 +45,7 @@
     <ListView class="chat-box" #chatBox
         separatorColor="transparent"
         [items]="messages"
+        (loaded)="scrollChatToBottom()"
         row="1">
         <ng-template let-item="item">
             <GridLayout class="bubble-container">
