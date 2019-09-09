@@ -49,12 +49,12 @@ TextView.message-content {
 }
 
 StackLayout.bubble-from-me {
-  background-color: #85929E;
+  background-color: #C8DFFF;
   margin-left: 40;
 }
 
 StackLayout.bubble-from-other {
-  background-color: #D6DBDF;
+  background-color: #EAE9F1;
   margin-right: 40;
 }
 
