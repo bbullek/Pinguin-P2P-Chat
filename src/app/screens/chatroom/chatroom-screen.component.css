@@ -68,3 +68,12 @@ Label.message-date {
   margin-left: 10;
   text-align: left;
 }
+
+Label.send-button {
+  vertical-align: middle;
+  margin-left: 5;
+}
+
+GridLayout.message-box {
+  padding: 10;
+}

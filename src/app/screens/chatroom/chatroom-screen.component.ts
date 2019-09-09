@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, NgZone } from "@angular/core";
-import { registerElement } from 'nativescript-angular/element-registry';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, NgZone } from "@angular/core";
+import { ListView } from "tns-core-modules/ui/list-view";
+import { TextView } from "tns-core-modules/ui/text-view";
 import { ChatroomService, User, Message } from './chatroom.service';
 
 const ws = require("nativescript-websockets");
@@ -84,5 +85,65 @@ export class ChatroomScreenComponent {
     private isMy(message: Message): boolean {
         return message.sender == this.me;
     }
-}
 
+    /**
+     * Selects the chatroom's chat box component (stores all messages).
+     */
+    @ViewChild('chatBox', {static: false}) chatBoxRef: ElementRef;
+    private get chatBox(): ListView {
+        return this.chatBoxRef.nativeElement;
+    }
+
+    /**
+     * Selects the chatroom's chat box component (stores active text being
+     * written by user prior to sending).
+     */
+    @ViewChild('newMessage', {static: false}) newMessageRef;
+    private get newMessage(): TextView {
+        return this.newMessageRef.nativeElement;
+    }
+
+    /**
+     * Adds the content of the textbox to the chatroom's list of messages.
+     */
+    public sendMessage(): void {
+        const content = this.newMessage.text;
+        if (content == '') {
+            return;
+        }
+        const message = this.initializeMessageWith(content);
+        this.messages.push(message);
+        this.scrollChatToBottom();
+        this.dismissKeyBoard();
+    }
+
+    /**
+     * Creates a new message (with content from the textbox) and assigns
+     * the sender/date.
+     */
+    private initializeMessageWith(content: string): Message {
+        return {
+            content: content,
+            sender: this.me,
+            date: new Date()
+        };
+    }
+
+    /**
+     * Send the chat view to the last (most recent) index of the
+     * message array.
+     */
+    private scrollChatToBottom(): void {
+        setTimeout(() => {
+            this.chatBox.scrollToIndex(this.messages.length - 1);
+        }, 0);
+    }
+
+    /**
+     * Clears the textbox and hides the user's keyboard.
+     */
+    private dismissKeyBoard(): void {
+        this.newMessage.text = '';
+        this.chatBox.focus();
+    }
+}
