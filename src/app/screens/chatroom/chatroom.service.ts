@@ -40,7 +40,7 @@ export class ChatroomService {
         };
         const other = {
             name: faker.name.findName(),
-            pictureUrl: 'https://unsplash.it/100/100?image=823',
+            pictureUrl: 'https://i.imgur.com/y3cKSmP.png',
             coverUrl: 'https://i.imgur.com/xutC5nY.jpg',
         };
 
