@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { HideActionBarDirective } from "./screens/util/hideActionBar";
 import { LoginScreenComponent } from "./screens/login/login-screen.component";
 import { ChatroomScreenComponent } from "./screens/chatroom/chatroom-screen.component";
+import { TimeAgoPipe } from "./screens/chatroom/timeago.service";
 
 @NgModule({
     bootstrap: [
@@ -22,7 +23,8 @@ import { ChatroomScreenComponent } from "./screens/chatroom/chatroom-screen.comp
         AppComponent,
         LoginScreenComponent,
         ChatroomScreenComponent,
-        HideActionBarDirective
+        HideActionBarDirective,
+        TimeAgoPipe
     ],
     providers: [],
     schemas: [

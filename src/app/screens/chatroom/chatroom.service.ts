@@ -4,6 +4,7 @@
  */
 
 import { Injectable } from '@angular/core';
+
 const faker = require('faker');
 
 export interface User {

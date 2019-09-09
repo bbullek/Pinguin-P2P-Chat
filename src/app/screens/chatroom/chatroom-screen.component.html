@@ -54,7 +54,7 @@
                         text="{{ item.content }}">
                     </TextView>
                     <Label class="message-date"
-                        text="{{ item.date }}">
+                        [text]="item.date | timeAgo">
                     </Label>
                 </StackLayout>
             </GridLayout>
