@@ -1,5 +1,5 @@
-<ActionBar title="Websocket Example"></ActionBar>
-<GridLayout rows="*, auto" columns="*">
+<!-- <GridLayout rows="*, auto" columns="*" hideActionBar>
+
     <ListView [items]="messages" class="list-group" row="0" col="0">
         <ng-template let-message="item">
             <GridLayout class="list-group-item">
@@ -7,10 +7,76 @@
             </GridLayout>
         </ng-template>
     </ListView>
+
     <StackLayout class="chat-area" row="1" col="0">
         <GridLayout rows="auto" columns="*, auto">
             <TextField [(ngModel)]="chatBox" class="input" row="0" col="0"></TextField>
             <Button text="Send" (tap)="send()" class="btn btn-primary" row="0" col="1"></Button>
         </GridLayout>
     </StackLayout>
+
+</GridLayout> -->
+
+<ActionBar title="Chat"></ActionBar>
+
+<GridLayout rows="auto, *, auto">
+
+    <!-- User dashboard -->
+    <GridLayout row="0">
+        <Image class="other-cover-image"
+          stretch="aspectFill"
+          [src]="other.coverUrl">
+        </Image>
+        <StackLayout class="profile-container">
+            <StackLayout orientation="horizontal">
+                <StackLayout class="other-profile-image-container">
+                    <Image class="other-profile-image"
+                        [src]="other.pictureUrl">
+                    </Image>
+                </StackLayout>
+                <Label class="other-name"
+                    [text]="other.name">
+                </Label>
+            </StackLayout>
+        </StackLayout>
+    </GridLayout>
+
+    <!-- Chat box -->
+    <ListView class="chat-box" #chatBox
+        separatorColor="transparent"
+        [items]="messages"
+        row="1">
+        <ng-template let-item="item">
+            <GridLayout class="bubble-container">
+                <StackLayout [class]="bubbleClass(item)">
+                    <TextView class="message-content"
+                        editable="false"
+                        text="{{ item.content }}">
+                    </TextView>
+                    <Label class="message-date"
+                        text="{{ item.date }}">
+                    </Label>
+                </StackLayout>
+            </GridLayout>
+        </ng-template>
+    </ListView>
+
+    <!-- Message box -->
+    <StackLayout #messageBox
+        row="2">
+        <StackLayout class="message-box-container">
+            <GridLayout class="message-box"
+                columns="*, auto">
+                <TextView class="write-message-field" #newMessage
+                    col="0"
+                    hint="Write a message...">
+                </TextView>
+                <Label class="send-button"
+                    col="1"
+                    text="Send">
+                </Label>
+            </GridLayout>
+        </StackLayout>
+    </StackLayout>
+
 </GridLayout>

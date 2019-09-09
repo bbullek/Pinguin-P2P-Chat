@@ -29,7 +29,7 @@ export interface Chat {
 }
 
 @Injectable()
-export class ChatService {
+export class ChatroomService {
 
     getChat(): Chat {
         const me = {
