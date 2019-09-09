@@ -11,6 +11,6 @@ refer to http://docs.nativescript.org/ui/theme.
 */
 @import '~nativescript-theme-core/css/core.light.css';
 
-Button, Label, TextField {
+/* Button, Label, TextField {
     font-family: "monospace";
-}
+} */

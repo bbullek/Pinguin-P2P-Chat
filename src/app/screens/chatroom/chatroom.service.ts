@@ -41,7 +41,7 @@ export class ChatroomService {
         const other = {
             name: faker.name.findName(),
             pictureUrl: 'https://unsplash.it/100/100?image=823',
-            coverUrl: 'https://unsplash.it/400/400?image=531',
+            coverUrl: 'https://i.imgur.com/xutC5nY.jpg',
         };
 
         const messages = [];
