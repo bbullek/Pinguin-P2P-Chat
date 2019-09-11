@@ -116,14 +116,18 @@ export class ChatroomScreenComponent {
      * Adds the content of the textbox to the chatroom's list of messages.
      */
     public sendMessage(): void {
-        const content = this.newMessage.text;
-        if (content == '') {
+        const content = this.newMessage;
+        const text = content.text;
+        if (text == '') {
             return;
         }
-        const message = this.initializeMessageWith(content);
+        const message = this.initializeMessageWith(text);
         this.messages.push(message);
+
+        // Hide keyboard after pressing Send
         this.scrollChatToBottom();
         this.dismissKeyBoard();
+        content.dismissSoftInput();
     }
 
     /**
