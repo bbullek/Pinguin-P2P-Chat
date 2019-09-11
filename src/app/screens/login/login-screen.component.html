@@ -3,6 +3,8 @@
     <Label class="title" text="Choose a chatroom to join."></Label>
 
     <TextField id="user-field"
+        required
+        #element #elementModel="ngModel"
         hint="Your name"
         [(ngModel)]="userName">
     </TextField>
