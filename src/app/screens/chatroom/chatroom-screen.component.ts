@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy, NgZone } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { ListView } from "tns-core-modules/ui/list-view";
 import { TextView } from "tns-core-modules/ui/text-view";
 import { ChatroomService, User, Message } from './chatroom.service';
@@ -60,16 +61,24 @@ const ws = require("nativescript-websockets");
 export class ChatroomScreenComponent {
     public me: User;
     public other: User;
+    public room: string;
     public messages: Array<Message>;
 
-    constructor(private chatService: ChatroomService) {
-
-        const chat = chatService.getChat();
+    constructor(private route: ActivatedRoute, private chatService: ChatroomService) {
+        const chat = chatService.getChat(); // Debug: Init chat with some pre-generated messages
 
         this.me = chat.participants.me;
         this.other = chat.participants.other;
         this.messages = chat.messages;
+
+        // Use data passed through login screen
+        this.route.queryParams.subscribe(params => {
+            // TODO: Instead pass to chatservice's User constructor directly
+            this.me.name = params["name"];
+            this.room = params["room"];
+        });
     }
+
 
     /**
      * Gets one of two CSS classes for the chat bubble (me/other).

@@ -2,13 +2,13 @@
 
     <Label class="title" text="Choose a chatroom to join."></Label>
 
+    <TextField id="user-field"
+        hint="Your name"
+        [(ngModel)]="userName">
+    </TextField>
     <TextField id="room-field"
         hint="Chatroom name"
-        [(ngmodel)]='chatroomName'>
-    </TextField>
-    <TextField id="user-field"
-        hint="Display name"
-        [(ngmodel)]='displayName'>
+        [(ngModel)]="roomName">
     </TextField>
 
     <AbsoluteLayout>

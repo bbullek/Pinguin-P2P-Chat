@@ -35,6 +35,6 @@ TextField {
 
 /* TextFields */
 
-#room-field { margin-top: 10%; }
+#room-field { margin-top: 1%; }
 
-#user-field { margin-top: 1%; }
+#user-field { margin-top: 10%; }

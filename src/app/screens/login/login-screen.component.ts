@@ -1,5 +1,9 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, NavigationExtras } from "@angular/router";
+import { EventData } from "tns-core-modules/data/observable";
+import { Page } from "tns-core-modules/ui/page";
+import { getViewById } from "tns-core-modules/ui/core/view";
+import { TextField } from "tns-core-modules/ui/text-field";
 
 @Component({
     selector: 'ns-login-screen',
@@ -9,12 +13,19 @@ import { Router } from "@angular/router";
 })
 
 export class LoginScreenComponent {
+    userName: string = '';
+    roomName: string = '';
+
     public constructor(private router: Router) {}
 
-    chatroomName = '';
-    displayName = '';
-
     public navigateToChatroom() {
-        this.router.navigate(["/chatroom"]);
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "name": this.userName,
+                "room": this.roomName,
+            }
+        };
+
+        this.router.navigate(["/chatroom"], navigationExtras);
     }
 }

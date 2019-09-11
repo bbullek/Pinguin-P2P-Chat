@@ -45,7 +45,7 @@ export class ChatroomService {
         };
 
         const messages = [];
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
             const sender = faker.random.boolean() ? me : other;
             const content = faker.lorem.sentence();
             const date = faker.date.recent();
