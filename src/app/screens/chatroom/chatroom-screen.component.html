@@ -21,20 +21,26 @@
 
     <!-- User dashboard -->
     <GridLayout row="0">
-        <Image class="other-cover-image"
+
+        <Image class="cover-image"
           stretch="aspectFill"
-          [src]="other.coverUrl">
+          [src]="me.coverUrl">
         </Image>
+
         <StackLayout class="profile-container">
             <StackLayout orientation="horizontal">
-                <StackLayout class="other-profile-image-container">
-                    <Image class="other-profile-image"
-                        [src]="other.pictureUrl">
+
+                <StackLayout class="profile-image-container">
+                    <Image class="profile-image"
+                        [src]="me.pictureUrl">
                     </Image>
                 </StackLayout>
-                <Label class="other-name"
-                    [text]="'Welcome, ' + me.name + '!'" textWrap="true">
+
+                <Label class="name"
+                    [text]="'Welcome, ' + me.name + '!'"
+                    textWrap="true">
                 </Label>
+
             </StackLayout>
         </StackLayout>
     </GridLayout>

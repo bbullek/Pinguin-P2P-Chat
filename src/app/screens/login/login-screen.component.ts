@@ -13,7 +13,7 @@ import { TextField } from "tns-core-modules/ui/text-field";
 })
 
 export class LoginScreenComponent {
-    userName: string = '';
+    userName: string = 'Developer'; // Set to empty str out of debug mode
     roomName: string = '';
 
     public constructor(private router: Router) {}

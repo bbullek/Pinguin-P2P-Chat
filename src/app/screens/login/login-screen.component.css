@@ -6,6 +6,11 @@ Button {
     border-radius: 5%;
 }
 
+Button:disabled {
+    background-color: #ededed;
+    color: #929292;
+}
+
 TextField {
     width: 74%;
 }

@@ -35,8 +35,8 @@ export class ChatroomService {
     getChat(): Chat {
         const me = {
             name: 'Me',
-            pictureUrl: 'https://unsplash.it/100/100?image=837',
-            coverUrl: ''
+            pictureUrl: 'https://i.imgur.com/y3cKSmP.png',
+            coverUrl: 'https://i.imgur.com/xutC5nY.jpg'
         };
         const other = {
             name: faker.name.findName(),
@@ -45,7 +45,7 @@ export class ChatroomService {
         };
 
         const messages = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             const sender = faker.random.boolean() ? me : other;
             const content = faker.lorem.sentence();
             const date = faker.date.recent();

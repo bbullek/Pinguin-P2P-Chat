@@ -1,18 +1,18 @@
-.chat-area {
-  background-color: #F0F0F0;
+.chat-box {
+  background-color: #FCFCFE;
 }
 
-Image.other-profile-image {
-  height: 75;
-  width: 75;
-  border-radius: 36;
+Image.profile-image {
+  height: 70;
+  width: 70;
+  border-radius: 32;
 }
 
-Image.other-cover-image {
-  height: 130;
+Image.cover-image {
+  height: 95;
 }
 
-StackLayout.other-profile-image-container {
+StackLayout.profile-image-container {
   border-color: #FFFFFF;
   border-width: 2;
   border-radius: 38;
@@ -20,16 +20,8 @@ StackLayout.other-profile-image-container {
 
 StackLayout.profile-container {
   vertical-align: middle;
-  text-align: left;
+  text-align: middle;
   margin-left: 10;
-}
-
-Label.other-name {
-  border-color: #000000;
-  vertical-align: middle;
-  margin-left: 5;
-  font-size: 22;
-  color: #788599;
 }
 
 StackLayout.bubble-container {
@@ -41,11 +33,6 @@ StackLayout.bubble-from-other{
   border-radius: 10;
   padding: 10;
   font-size: 14;
-}
-
-TextView.message-content {
-  width: 100%;
-  background-color: transparent;
 }
 
 StackLayout.bubble-from-me {
@@ -62,6 +49,18 @@ GridLayout.bubble-container {
   padding: 10;
 }
 
+GridLayout.message-box {
+  padding: 10;
+}
+
+Label.name {
+  border-color: #000000;
+  vertical-align: middle;
+  margin-left: 5;
+  font-size: 22;
+  color: #788599;
+}
+
 Label.message-date {
   font-size: 11;
   font-style: italic;
@@ -74,6 +73,11 @@ Label.send-button {
   margin-left: 5;
 }
 
-GridLayout.message-box {
-  padding: 10;
+TextView.message-content {
+  width: 100%;
+  background-color: transparent;
+}
+
+TextView.write-message-field {
+  background-color: #FCFCFE;
 }

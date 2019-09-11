@@ -15,6 +15,7 @@
 
     <AbsoluteLayout>
         <Button id="btn-join"
+            [isEnabled]="elementModel.valid"
             (tap)="navigateToChatroom()"
             text="Join">
         </Button>
