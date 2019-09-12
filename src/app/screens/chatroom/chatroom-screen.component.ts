@@ -103,6 +103,17 @@ export class ChatroomScreenComponent {
     }
 
     /**
+     *
+     */
+    private getDisplayName(message: Message): string {
+        if (this.isMy(message)) {
+            return 'Me';
+        } else {
+            return message.sender.name;
+        }
+    }
+
+    /**
      * Selects the chatroom's chat box component (stores all messages).
      */
     @ViewChild('chatBox', {static: false}) chatBoxRef: ElementRef;

@@ -54,11 +54,16 @@
         <ng-template let-item="item">
             <GridLayout class="bubble-container">
                 <StackLayout [class]="bubbleClass(item)">
+                    <Label class="message-date"
+                        [visibility]="isSystem(item) ? 'collapsed' : 'visible'"
+                        [text]="getDisplayName(item)">
+                    </Label>
                     <TextView class="message-content"
                         editable="false"
                         text="{{ item.content }}">
                     </TextView>
                     <Label class="message-date"
+                        [visibility]="isSystem(item) ? 'collapsed' : 'visible'"
                         [text]="item.date | timeAgo">
                     </Label>
                 </StackLayout>
