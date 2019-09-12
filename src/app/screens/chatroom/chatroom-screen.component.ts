@@ -1,9 +1,14 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy, NgZone } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
 import { ListView } from "tns-core-modules/ui/list-view";
 import { TextView } from "tns-core-modules/ui/text-view";
 import { ChatroomService, User, Message } from './chatroom.service';
 import { SocketService } from './socket.service';
+import * as application from "tns-core-modules/application";
+import * as dialogs from "tns-core-modules/ui/dialogs";
+import { AndroidApplication, AndroidActivityBackPressedEventData } from "tns-core-modules/application";
+import { isAndroid } from "tns-core-modules/platform";
 
 const ws = require("nativescript-websockets");
 
@@ -24,7 +29,7 @@ export class ChatroomScreenComponent {
     private socket: any;
     private text: string;
 
-    constructor(private route: ActivatedRoute, private chatService: ChatroomService, private zone: NgZone) {
+    constructor(private route:ActivatedRoute, private routerExtensions: RouterExtensions, private chatService: ChatroomService, private zone: NgZone) {
         const chat = chatService.getChat(); // Debug: Init chat with some pre-generated messages
 
         this.me = chat.participants.me;
@@ -44,9 +49,10 @@ export class ChatroomScreenComponent {
     }
 
     /**
-     *
+     * Callback invoked as soon as the new page is instantiated.
      */
     public ngOnInit() {
+        console.log('init');
         this.socket.addEventListener('open', event => {
             this.zone.run(() => {
                 const newUser = this.me.name;
@@ -71,17 +77,30 @@ export class ChatroomScreenComponent {
         this.socket.addEventListener('error', event => {
             console.log("The socket had an error", event.error);
         });
+
+        // Disable default back button behavior on Android devices
+        if (!isAndroid) {
+            return;
+        }
+        application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
+            const url = this.route.snapshot['_routerState'].url;
+            if (url.includes("/chatroom")) {
+                data.cancel = true;
+                this.confirmLogout();
+            }
+        });
     }
 
     /**
-     *
+     * Callback invoked as soon as the page is closed.
      */
     public ngOnDestroy() {
+        console.log('destroy');
         this.socket.close();
     }
 
     /**
-     * Gets the respsective CSS classes for the chat bubble (me/system/other user).
+     * Gets the respective CSS classes for the chat bubble (me/system/other user).
      */
     public bubbleClass(message: Message): string {
         var sender = this.isMy(message) ? 'me' : 'other';
@@ -98,14 +117,16 @@ export class ChatroomScreenComponent {
     }
 
     /**
-     *
+     * Checks if this message was delivered as a type of chatroom notification (e.g.
+     * a new user has joined the room).
      */
     private isSystem(message: Message): boolean {
         return message.sender == this.system;
     }
 
     /**
-     *
+     * Return the string to display as an identifier within a given
+     * chat bubble.
      */
     private getDisplayName(message: Message): string {
         if (this.isMy(message)) {
@@ -180,5 +201,26 @@ export class ChatroomScreenComponent {
     private dismissKeyBoard(): void {
         this.newMessage.text = '';
         this.chatBox.focus();
+    }
+
+    /**
+     * Trigger a confirmation dialog that takes the user back to the main page
+     * or discards a device's back button press if accidental.
+     */
+    public confirmLogout() {
+        dialogs.confirm({
+            title: "Exit",
+            message: "Did you want to logout of chat?",
+            okButtonText: "Yes",
+            cancelButtonText: "Nope"
+        }).then(result => {
+            if (!result) return;
+            // If dialog is confirmed, exit back to login screen
+            this.back();
+        });
+    }
+
+    back() {
+        this.routerExtensions.back();
     }
 }
