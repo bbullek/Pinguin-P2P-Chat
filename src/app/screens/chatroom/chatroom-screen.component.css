@@ -46,7 +46,7 @@ StackLayout.bubble-from-other {
 }
 
 StackLayout.bubble-from-system {
-  border-radius: 0;
+  border-radius: 50;
   padding: 10;
   font-size: 14;
   background-color: #99A8CC;
@@ -70,11 +70,16 @@ Label.name {
   color: #788599;
 }
 
+Label.message-name,
 Label.message-date {
   font-size: 11;
   font-style: italic;
   margin-left: 10;
   text-align: left;
+}
+
+Label.message-name {
+  text-transform: lowercase;
 }
 
 Label.send-button {

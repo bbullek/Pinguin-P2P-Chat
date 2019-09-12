@@ -49,7 +49,8 @@ export class ChatroomScreenComponent {
     public ngOnInit() {
         this.socket.addEventListener('open', event => {
             this.zone.run(() => {
-                const message = this.initializeMessageWith("Welcome to the chat!", this.system);
+                const newUser = this.me.name;
+                const message = this.initializeMessageWith(newUser + " has joined the chat.", this.system);
                 this.messages.push(message);
             });
         });
@@ -62,7 +63,8 @@ export class ChatroomScreenComponent {
         });
         this.socket.addEventListener('close', event => {
             this.zone.run(() => {
-                const message = this.initializeMessageWith("You have been disconnected.", this.system);
+                const oldUser = this.me.name;
+                const message = this.initializeMessageWith(oldUser + " has left the chat.", this.system);
                 this.messages.push(message);
             });
         });
