@@ -45,6 +45,16 @@ StackLayout.bubble-from-other {
   margin-right: 40;
 }
 
+StackLayout.bubble-from-system {
+  border-radius: 0;
+  padding: 10;
+  font-size: 14;
+  background-color: #99A8CC;
+  color: #EEF1F8;
+  width: 100%;
+  text-align: center;
+}
+
 GridLayout.bubble-container {
   padding: 10;
 }

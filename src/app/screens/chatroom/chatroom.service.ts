@@ -11,6 +11,7 @@ export interface User {
     name: string;
     pictureUrl: string;
     coverUrl: string;
+    admin: boolean;
 }
 
 export interface Message {
@@ -22,6 +23,7 @@ export interface Message {
 export interface Participants {
     me: User;
     other: User;
+    system: User;
 }
 
 export interface Chat {
@@ -36,13 +38,21 @@ export class ChatroomService {
         const me = {
             name: 'Me',
             pictureUrl: 'https://i.imgur.com/y3cKSmP.png',
-            coverUrl: 'https://i.imgur.com/xutC5nY.jpg'
+            coverUrl: 'https://i.imgur.com/xutC5nY.jpg',
+            admin: false
         };
         const other = {
             name: faker.name.findName(),
             pictureUrl: 'https://i.imgur.com/y3cKSmP.png',
             coverUrl: 'https://i.imgur.com/xutC5nY.jpg',
+            admin: false
         };
+        const system = {
+            name: 'Notification',
+            pictureUrl: '',
+            coverUrl: '',
+            admin: true
+        }
 
         const messages = [];
         for (let i = 0; i < 4; i++) {
@@ -60,7 +70,8 @@ export class ChatroomService {
         const chat = {
             participants: {
                 me: me,
-                other: other
+                other: other,
+                system: system
             },
             messages: messages.sort((a, b) => {
                 return a.date - b.date;

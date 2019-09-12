@@ -18,6 +18,7 @@ const ws = require("nativescript-websockets");
 export class ChatroomScreenComponent {
     public me: User;
     public other: User;
+    public system: User;
     public room: string;
     public messages: Array<Message>;
     private socket: any;
@@ -28,6 +29,7 @@ export class ChatroomScreenComponent {
 
         this.me = chat.participants.me;
         this.other = chat.participants.other;
+        this.system = chat.participants.system;
         this.messages = chat.messages;
 
         // Use data passed through login screen
@@ -47,20 +49,20 @@ export class ChatroomScreenComponent {
     public ngOnInit() {
         this.socket.addEventListener('open', event => {
             this.zone.run(() => {
-                const message = this.initializeMessageWith("Welcome to the chat!");
+                const message = this.initializeMessageWith("Welcome to the chat!", this.system);
                 this.messages.push(message);
             });
         });
         this.socket.addEventListener('message', event => {
             this.zone.run(() => {
                 console.log(this.text);
-                const message = this.initializeMessageWith(this.text);
+                const message = this.initializeMessageWith(this.text, this.me);
                 this.messages.push(message);
             });
         });
         this.socket.addEventListener('close', event => {
             this.zone.run(() => {
-                const message = this.initializeMessageWith("You have been disconnected.");
+                const message = this.initializeMessageWith("You have been disconnected.", this.system);
                 this.messages.push(message);
             });
         });
@@ -77,10 +79,12 @@ export class ChatroomScreenComponent {
     }
 
     /**
-     * Gets one of two CSS classes for the chat bubble (me/other).
+     * Gets the respsective CSS classes for the chat bubble (me/system/other user).
      */
     public bubbleClass(message: Message): string {
-        const sender = this.isMy(message) ? 'me' : 'other';
+        var sender = this.isMy(message) ? 'me' : 'other';
+        if (this.isSystem(message)) { sender = 'system' }
+
         return `bubble-from-${sender}`;
     }
 
@@ -89,6 +93,13 @@ export class ChatroomScreenComponent {
      */
     private isMy(message: Message): boolean {
         return message.sender == this.me;
+    }
+
+    /**
+     *
+     */
+    private isSystem(message: Message): boolean {
+        return message.sender == this.system;
     }
 
     /**
@@ -132,10 +143,10 @@ export class ChatroomScreenComponent {
      * Creates a new message (with content from the textbox) and assigns
      * the sender/date.
      */
-    private initializeMessageWith(content: string): Message {
+    private initializeMessageWith(content: string, sender: User): Message {
         return {
             content: content,
-            sender: this.me,
+            sender: sender,
             date: new Date()
         };
     }
