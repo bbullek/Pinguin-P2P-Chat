@@ -20,6 +20,7 @@ export class SocketService {
     }
 
     public send(data: string) {
+        console.log('data is ' + data);
         this.socket.send(data);
     }
 

@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ListView } from "tns-core-modules/ui/list-view";
 import { TextView } from "tns-core-modules/ui/text-view";
 import { ChatroomService, User, Message } from './chatroom.service';
+import { SocketService } from './socket.service';
 
 const ws = require("nativescript-websockets");
 
@@ -14,57 +15,15 @@ const ws = require("nativescript-websockets");
     moduleId: module.id
 })
 
-// export class ChatroomScreenComponent implements OnInit, OnDestroy {
-    // private socket: any;
-    // public messages: Array<any>;
-    // public chatBox: string;
-
-    // public constructor(private zone: NgZone) {
-    //     this.socket = new ws("ws://192.168.1.8:12345/ws", []);
-    //     this.socket.open();
-    //     this.messages = [];
-    //     this.chatBox = "";
-    // }
-
-    // public ngOnInit() {
-    //     this.socket.addEventListener('open', event => {
-    //         this.zone.run(() => {
-    //             this.messages.push({content: "Welcome to the chat!"});
-    //         });
-    //     });
-    //     this.socket.addEventListener('message', event => {
-    //         this.zone.run(() => {
-    //             this.messages.push({content: this.chatBox});
-    //             this.chatBox = "";
-    //         });
-    //     });
-    //     this.socket.addEventListener('close', event => {
-    //         this.zone.run(() => {
-    //             this.messages.push({content: "You have been disconnected"});
-    //         });
-    //     });
-    //     this.socket.addEventListener('error', event => {
-    //         console.log("The socket had an error", event.error);
-    //     });
-    // }
-
-    // public ngOnDestroy() {
-    //     this.socket.close();
-    // }
-
-    // public send() {
-    //     if (this.chatBox) {
-    //         this.socket.send(this.chatBox);
-    //     }
-    // }
-
 export class ChatroomScreenComponent {
     public me: User;
     public other: User;
     public room: string;
     public messages: Array<Message>;
+    private socket: any;
+    private text: string;
 
-    constructor(private route: ActivatedRoute, private chatService: ChatroomService) {
+    constructor(private route: ActivatedRoute, private chatService: ChatroomService, private zone: NgZone) {
         const chat = chatService.getChat(); // Debug: Init chat with some pre-generated messages
 
         this.me = chat.participants.me;
@@ -77,8 +36,45 @@ export class ChatroomScreenComponent {
             this.me.name = params["name"];
             this.room = params["room"];
         });
+
+        this.socket = new ws("ws://192.168.1.8:12345/ws", []);
+        this.socket.open();
     }
 
+    /**
+     *
+     */
+    public ngOnInit() {
+        this.socket.addEventListener('open', event => {
+            this.zone.run(() => {
+                const message = this.initializeMessageWith("Welcome to the chat!");
+                this.messages.push(message);
+            });
+        });
+        this.socket.addEventListener('message', event => {
+            this.zone.run(() => {
+                console.log(this.text);
+                const message = this.initializeMessageWith(this.text);
+                this.messages.push(message);
+            });
+        });
+        this.socket.addEventListener('close', event => {
+            this.zone.run(() => {
+                const message = this.initializeMessageWith("You have been disconnected.");
+                this.messages.push(message);
+            });
+        });
+        this.socket.addEventListener('error', event => {
+            console.log("The socket had an error", event.error);
+        });
+    }
+
+    /**
+     *
+     */
+    public ngOnDestroy() {
+        this.socket.close();
+    }
 
     /**
      * Gets one of two CSS classes for the chat bubble (me/other).
@@ -121,8 +117,10 @@ export class ChatroomScreenComponent {
         if (text == '') {
             return;
         }
-        const message = this.initializeMessageWith(text);
-        this.messages.push(message);
+
+        // Alert the socket to a new message
+        this.text = text;
+        this.socket.send(text);
 
         // Hide keyboard after pressing Send
         this.scrollChatToBottom();
